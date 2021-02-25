@@ -1,10 +1,15 @@
 TITLE MASM Template	(main.asm)
 ; Description:    Number Value Program 
-; Authors:         
-; Date:           
-INCLUDE Irvine32.inc    
+; Authors:  Jay Helm       
+; Date:     2/25/21     
+
+INCLUDE Irvine32.inc   
+.const
 ; TODO: PLACE SYMBOLIC INTEGER CONSTANTS HERE 
-;
+uno DWORD 1
+dos DWORD 2
+tres DWORD 3
+quat DWORD 4
 .data
 ; TODO: MAKE A LABEL numeros THAT LOCATES MEMORY FOR ALL THE DWORD NUMBER VALUES
 ; USE THE INTEGER CONSTANTS SPECIFIED ABOVE TO INITALIZE ALL 10 DWORD VALUES
