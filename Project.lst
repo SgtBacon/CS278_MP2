@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.28.29337.0	    02/25/21 13:49:19
+Microsoft (R) Macro Assembler Version 14.28.29337.0	    03/08/21 15:00:10
 MASM Template	(main.asm				     Page 1 - 1
 
 
@@ -28,31 +28,68 @@ Microsoft (R) Macro Assembler Version 14.28.29337.0	    02/25/21 13:49:19
  00000000			.const
 				; TODO: PLACE SYMBOLIC INTEGER CONSTANTS HERE 
  00000000 00000001		uno DWORD 1
+ 00000004 00000002		dos DWORD 2
+ 00000008 00000003		tres DWORD 3
+ 0000000C 00000004		quat DWORD 4
+ 00000010 00000005		cinco DWORD 5
+ 00000014 00000006		seis DWORD 6
+ 00000018 00000007		siete DWORD 7
+ 0000001C 00000008		ocho DWORD 8
+ 00000020 00000009		nueve DWORD 9
+ 00000024 0000000A		dies DWORD 10
+ 00000028 0000000B		once DWORD 11
+ 0000002C 0000000C		doce DWORD 12
+ 00000030 0000000D		trece DWORD 13
+
+ 00000034 0000000E		catorce DWORD 14
+ 00000038 0000000F		quince DWORD 15
+
  00000000			.data
 				; TODO: MAKE A LABEL numeros THAT LOCATES MEMORY FOR ALL THE DWORD NUMBER VALUES
 				; USE THE INTEGER CONSTANTS SPECIFIED ABOVE TO INITALIZE ALL 10 DWORD VALUES
 				; PUT THE NUMBER CONSTANTS IN MEMORY IN DESCENDING ORDER SO THAT THE OUTPUT FROM YOUR
 				; PROGRAM MATCHES THAT SHOWN BELOW
+ 00000000 00000038 R		numeros DWORD quince, catorce, trece, doce, once, dies, nueve, ocho, siete, seis, cinco, quat, tres, dos, uno
+	   00000034 R
+	   00000030 R
+	   0000002C R
+	   00000028 R
+	   00000024 R
+	   00000020 R
+	   0000001C R
+	   00000018 R
+	   00000014 R
+	   00000010 R
+	   0000000C R
+	   00000008 R
+	   00000004 R
+	   00000000 R
+
  00000000			.code
- 00000000			main proc
+ 00000000			main1 proc
 				       ; The code for main has already been written for you...
 				       ; Setup a loop that will run 10 times and output all the DWORD number values
- 00000000  B9 0000000A			mov ecx, 10
+ 00000000  B9 0000000F			mov ecx, 15
  00000005  BE 00000000			mov esi, 0   
  0000000A				label1:
 					    ; This writes out each DWORD from the array "numeros" to the screen 
-					    mov eax,numeros[esi*TYPE DWORD]
-MP2_Source.asm(23) : error A2006:undefined symbol : numeros
- 0000000A  E8 00000000 E		    call WriteInt
+ 0000000A  8B 04 B5			    mov eax,numeros[esi*TYPE DWORD]
+	   00000000 R
+ 00000011  E8 00000000 E		    call WriteInt
 					    ; This increments the array index counter
- 0000000F  46				    inc esi
- 00000010  E2 F8			LOOP label1  ; Loop 10 times (based on value in ECX)
+ 00000016  46				    inc esi
+ 00000017  E2 F1			LOOP label1  ; Loop 10 times (based on value in ECX)
 					invoke ExitProcess,0
- 00000012  6A 00	   *	    push   +000000000h
- 00000014  E8 00000000 E   *	    call   ExitProcess
- 00000019			main endp
-				end main
-Microsoft (R) Macro Assembler Version 14.28.29337.0	    02/25/21 13:49:19
+ 00000019  6A 00	   *	    push   +000000000h
+ 0000001B  E8 00000000 E   *	    call   ExitProcess
+ 00000020			main1 endp
+				end main1
+
+				; What I noticed:
+				; Originally, the output says "+4214832 + 4214828 + 4214824 + 4214820 + 4214816 + 4214812 + 4214808 + 4214804 + 4214800 + 4214796"
+				; The first 10 numbers of the array, 
+				; Increasing the size of the array did nothing, since the loop only runs 10 times.
+Microsoft (R) Macro Assembler Version 14.28.29337.0	    03/08/21 15:00:10
 MASM Template	(main.asm				     Symbols 2 - 1
 
 
@@ -144,11 +181,11 @@ Segments and Groups:
 
                 N a m e                 Size     Length   Align   Combine Class
 
-CONST  . . . . . . . . . . . . .	32 Bit	 00000004 Para	  Public  'CONST'	 ReadOnly
+CONST  . . . . . . . . . . . . .	32 Bit	 0000003C Para	  Public  'CONST'	 ReadOnly
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000024 Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000003C Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000020 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -255,7 +292,7 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000024 Public STDCALL
+main1  . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000020 Public STDCALL
   label1 . . . . . . . . . . . .	L Near	 0000000A _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -478,7 +515,12 @@ WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
 black  . . . . . . . . . . . . .	Number	 00000000h   
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
+catorce  . . . . . . . . . . . .	DWord	 00000034 CONST	
+cinco  . . . . . . . . . . . . .	DWord	 00000010 CONST	
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
+dies . . . . . . . . . . . . . .	DWord	 00000024 CONST	
+doce . . . . . . . . . . . . . .	DWord	 0000002C CONST	
+dos  . . . . . . . . . . . . . .	DWord	 00000004 CONST	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
@@ -489,11 +531,21 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
+nueve  . . . . . . . . . . . . .	DWord	 00000020 CONST	
+numeros  . . . . . . . . . . . .	DWord	 00000000 _DATA	
+ocho . . . . . . . . . . . . . .	DWord	 0000001C CONST	
+once . . . . . . . . . . . . . .	DWord	 00000028 CONST	
+quat . . . . . . . . . . . . . .	DWord	 0000000C CONST	
+quince . . . . . . . . . . . . .	DWord	 00000038 CONST	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
+seis . . . . . . . . . . . . . .	DWord	 00000014 CONST	
+siete  . . . . . . . . . . . . .	DWord	 00000018 CONST	
+trece  . . . . . . . . . . . . .	DWord	 00000030 CONST	
+tres . . . . . . . . . . . . . .	DWord	 00000008 CONST	
 uno  . . . . . . . . . . . . . .	DWord	 00000000 CONST	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
 
 	   0 Warnings
-	   1 Errors
+	   0 Errors
